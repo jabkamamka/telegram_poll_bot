@@ -13,7 +13,12 @@ votes = defaultdict(int)
 # Обработчик команды /start
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "Привет! Оцените мероприятие: напишите 'хорошо', 'нормально' или 'плохо'.")
+    # Создание клавиатуры с вариантами голосования
+    keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons = ['Хорошо', 'Нормально', 'Плохо']
+    keyboard.add(*buttons)
+    
+    bot.send_message(message.chat.id, "Привет! Оцените мероприятие:", reply_markup=keyboard)
 
 # Обработчик текстовых сообщений
 @bot.message_handler(func=lambda message: True)
@@ -23,7 +28,7 @@ def handle_vote(message):
         votes[text] += 1
         bot.reply_to(message, f"Спасибо за ваш голос! Вы выбрали '{text}'.")
     else:
-        bot.reply_to(message, "Пожалуйста, выберите 'хорошо', 'нормально' или 'плохо'.")
+        bot.reply_to(message, "Пожалуйста, выберите 'Хорошо', 'Нормально' или 'Плохо' с помощью кнопок.")
 
 # Создание веб-приложения Flask
 app = Flask(__name__)
