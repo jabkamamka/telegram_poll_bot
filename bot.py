@@ -13,12 +13,7 @@ votes = defaultdict(int)
 # Обработчик команды /start
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    # Создание клавиатуры с вариантами голосования
-    keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    buttons = ['Хорошо', 'Нормально', 'Плохо']
-    keyboard.add(*buttons)
-    
-    bot.send_message(message.chat.id, "Привет! Оцените мероприятие:", reply_markup=keyboard)
+    bot.reply_to(message, "Привет! Оцените мероприятие: напишите 'хорошо', 'нормально' или 'плохо'.")
 
 # Обработчик текстовых сообщений
 @bot.message_handler(func=lambda message: True)
@@ -28,14 +23,25 @@ def handle_vote(message):
         votes[text] += 1
         bot.reply_to(message, f"Спасибо за ваш голос! Вы выбрали '{text}'.")
     else:
-        bot.reply_to(message, "Пожалуйста, выберите 'Хорошо', 'Нормально' или 'Плохо' с помощью кнопок.")
+        bot.reply_to(message, "Пожалуйста, выберите 'хорошо', 'нормально' или 'плохо'.")
 
 # Создание веб-приложения Flask
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html', votes=votes)
+    total_votes = sum(votes.values())
+    percentages = {}
+    if total_votes > 0:
+        percentages['хорошо'] = round((votes['хорошо'] / total_votes) * 100)
+        percentages['нормально'] = round((votes['нормально'] / total_votes) * 100)
+        percentages['плохо'] = round((votes['плохо'] / total_votes) * 100)
+    else:
+        percentages['хорошо'] = 0
+        percentages['нормально'] = 0
+        percentages['плохо'] = 0
+
+    return render_template('index.html', percentages=percentages)
 
 # Запуск веб-приложения в отдельном потоке
 def run_app():
