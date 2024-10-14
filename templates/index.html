@@ -16,19 +16,41 @@
         }
         .container {
             background-color: #fff;
-            padding: 20px;
+            padding: 15px; /* Уменьшено */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            max-width: 350px; /* Уменьшено */
             width: 100%;
             text-align: center;
+            position: relative; /* Для позиционирования кнопок */
+        }
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+        .circle {
+            width: 12px; /* Уменьшено */
+            height: 12px; /* Уменьшено */
+            border-radius: 50%;
+            margin-left: 4px; /* Уменьшено */
+            cursor: pointer;
+        }
+        .circle.red {
+            background-color: #ff5c5c; /* Красный */
+        }
+        .circle.yellow {
+            background-color: #ffbd44; /* Желтый */
+        }
+        .circle.green {
+            background-color: #00b300; /* Зеленый */
         }
         .bar {
             background-color: #d3d3d3;
             border-radius: 5px;
             margin: 10px 0;
             position: relative;
-            height: 30px;
+            height: 25px; /* Уменьшено */
             width: 100%;
         }
         .bar-fill {
@@ -43,7 +65,7 @@
             width: 100%;
             top: 0;
             left: 0;
-            line-height: 30px;
+            line-height: 25px; /* Уменьшено */
             color: #000;
         }
         .bar-fill-good {
@@ -59,7 +81,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Результаты голосования</h1>
+        <div class="header">
+            <div class="circle red"></div>
+            <div class="circle yellow"></div>
+            <div class="circle green"></div>
+        </div>
+        <h1 style="font-size: 24px;">Результаты голосования</h1> <!-- Уменьшен размер шрифта заголовка -->
         <div class="bar">
             <div class="bar-fill bar-fill-good" style="width: {{ percentages['хорошо'] }}%;"></div>
             <div class="bar-text">Хорошо: {{ percentages['хорошо'] }}%</div>

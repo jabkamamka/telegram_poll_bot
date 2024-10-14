@@ -1,4 +1,5 @@
 import telebot
+from telebot import types
 from flask import Flask, render_template
 from collections import defaultdict
 import threading
@@ -13,7 +14,13 @@ votes = defaultdict(int)
 # Обработчик команды /start
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "Привет! Оцените мероприятие: напишите 'хорошо', 'нормально' или 'плохо'.")
+    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+    markup.add('Хорошо', 'Нормально', 'Плохо')
+    bot.send_message(
+        message.chat.id, 
+        "Здравствуйте! Оцените мероприятие, выбрав один из вариантов ниже:", 
+        reply_markup=markup
+    )
 
 # Обработчик текстовых сообщений
 @bot.message_handler(func=lambda message: True)
