@@ -4,7 +4,7 @@ from flask import Flask, render_template
 from collections import defaultdict
 import threading
 
-API_TOKEN = '7781217820:AAFlE7zJjNIhccJN4HcB6sprR2daPZuxVOM'  # Замените на токен вашего бота
+API_TOKEN = ''  # Замените на токен вашего бота
 
 bot = telebot.TeleBot(API_TOKEN)
 
